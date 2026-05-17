@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Voice AI</title>
+    <link rel="stylesheet" href="./popup.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Voice AI</h1>
+      <button id="open-options" class="icon-btn" title="Settings" aria-label="Settings">⚙</button>
+    </header>
+
+    <label for="provider">Voice source</label>
+    <select id="provider">
+      <option value="web-speech">Browser (free, built-in)</option>
+      <option value="groq">Groq (free with API key)</option>
+    </select>
+
+    <label for="voice">Voice</label>
+    <select id="voice"></select>
+
+    <label for="text">Text</label>
+    <textarea id="text" rows="5" placeholder="Select text on the page and click Get selection, or paste here."></textarea>
+
+    <div class="row">
+      <button id="get-selection" class="secondary">Get selection</button>
+    </div>
+
+    <div class="row sliders">
+      <label>
+        Speed <span id="rate-val">1.0</span>
+        <input id="rate" type="range" min="0.5" max="2" step="0.1" value="1" />
+      </label>
+      <label>
+        Pitch <span id="pitch-val">1.0</span>
+        <input id="pitch" type="range" min="0.5" max="2" step="0.1" value="1" />
+      </label>
+    </div>
+
+    <div class="row actions">
+      <button id="speak" class="primary">Speak</button>
+      <button id="pause" disabled>Pause</button>
+      <button id="stop" disabled>Stop</button>
+    </div>
+
+    <div id="status" class="status" role="status"></div>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

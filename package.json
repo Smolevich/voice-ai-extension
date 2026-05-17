@@ -1,0 +1,26 @@
+{
+  "name": "voice-ai-extension",
+  "version": "0.1.0",
+  "description": "Voice AI — text-to-speech extension for Chrome and Firefox. Reads selected text using browser-native voices or your own Groq API key.",
+  "license": "MIT",
+  "author": "Stanislav Shupilkin",
+  "homepage": "https://github.com/Smolevich/voice-ai-extension",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Smolevich/voice-ai-extension.git"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:firefox": "vite build --mode firefox",
+    "zip": "npm run build && cd dist && zip -r ../voice-ai-extension.zip ./*",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@crxjs/vite-plugin": "^2.0.0",
+    "@types/chrome": "^0.0.270",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.0"
+  }
+}
