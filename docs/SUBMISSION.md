@@ -36,6 +36,20 @@ Bottom line for v0.1.0 submission: **$5 total**, paid once for Chrome.
 
 ## 🟢 Chrome Web Store
 
+Upload page:
+
+```text
+https://chrome.google.com/webstore/devconsole
+```
+
+Open the Developer Dashboard, click **New item**, and upload the Chrome zip from the GitHub Release:
+
+```text
+voice-ai-extension-chrome-v0.1.0.zip
+```
+
+Do not upload `dist/` directly to Chrome Web Store. `dist/` is only for local unpacked testing.
+
 ### Basic info
 
 | Field | Value (copy-paste) |
@@ -164,6 +178,20 @@ Four 1280×800 PNGs live in `docs/screenshots/store/`. Order matters — the fir
 ---
 
 ## 🦊 Firefox AMO (addons.mozilla.org)
+
+Upload page:
+
+```text
+https://addons.mozilla.org/developers/addon/submit/distribution
+```
+
+Upload the Firefox zip from the GitHub Release:
+
+```text
+voice-ai-extension-firefox-v0.1.0.zip
+```
+
+For local testing in `about:debugging`, Firefox asks for a file, not a folder. Select `dist-firefox/manifest.json`; the `dist-firefox/` folder itself may be disabled in the file picker.
 
 ### Basic info
 

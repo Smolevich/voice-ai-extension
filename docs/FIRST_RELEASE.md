@@ -30,7 +30,7 @@ Firefox smoke test:
 4. Open `about:addons`, find the temporary Voice AI add-on, and verify permissions are understandable.
 5. Run one final `npm run ff:lint`; AMO reviewers care about this output.
 
-If `web-ext run` is inconvenient, build with `npm run build:firefox`, open `about:debugging#/runtime/this-firefox`, click `Load Temporary Add-on`, and select `dist-firefox/manifest.json`.
+If `web-ext run` is inconvenient, build with `npm run build:firefox`, open `about:debugging#/runtime/this-firefox`, click `Load Temporary Add-on`, and select the file `dist-firefox/manifest.json`. Firefox does not load the folder itself in this flow, so the `dist-firefox/` directory can look disabled in the macOS file picker.
 
 ## 2. Verify the privacy page
 
@@ -87,8 +87,14 @@ Download those exact release assets for store submission. Do not upload a locall
 
 ## 5. Chrome Web Store
 
+Upload page:
+
+```text
+https://chrome.google.com/webstore/devconsole
+```
+
 1. Pay the one-time Chrome Web Store developer fee if not already paid.
-2. Create a new item.
+2. Open the Developer Dashboard and click `New item`.
 3. Upload `voice-ai-extension-chrome-v0.1.0.zip`.
 4. Copy listing text, single purpose, permission justifications, data disclosure answers, and privacy URL from `docs/SUBMISSION.md`.
 5. Upload the four screenshots from `docs/screenshots/store/`.
@@ -103,7 +109,13 @@ Approval notes:
 
 ## 6. Firefox AMO
 
-1. Create a new extension at `addons.mozilla.org/developers/`.
+Upload page:
+
+```text
+https://addons.mozilla.org/developers/addon/submit/distribution
+```
+
+1. Create a new extension at AMO.
 2. Upload `voice-ai-extension-firefox-v0.1.0.zip`.
 3. Pick MIT license and Accessibility/Productivity category.
 4. Copy AMO listing text from `docs/SUBMISSION.md`.
