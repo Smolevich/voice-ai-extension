@@ -2,12 +2,14 @@ import { loadSettings, saveSettings, type Settings, type Provider } from '../lib
 import * as webSpeech from '../lib/web-speech';
 import * as groq from '../lib/groq';
 import * as audio from '../lib/audio';
+import { Combobox, type ComboboxItem } from './combobox';
 
 type PlaybackState = 'idle' | 'playing' | 'paused';
 
 const els = {
   provider: document.getElementById('provider') as HTMLSelectElement,
-  voice: document.getElementById('voice') as HTMLSelectElement,
+  voiceInput: document.getElementById('voice-input') as HTMLInputElement,
+  voiceList: document.getElementById('voice-list') as HTMLUListElement,
   text: document.getElementById('text') as HTMLTextAreaElement,
   getSelection: document.getElementById('get-selection') as HTMLButtonElement,
   rate: document.getElementById('rate') as HTMLInputElement,
@@ -24,6 +26,20 @@ const els = {
 let settings: Settings;
 let state: PlaybackState = 'idle';
 
+const voiceCombo = new Combobox({
+  input: els.voiceInput,
+  list: els.voiceList,
+  onChange: async (value) => {
+    if (settings.provider === 'web-speech') {
+      settings.webSpeechVoice = value;
+      await saveSettings({ webSpeechVoice: value });
+    } else {
+      settings.groqVoice = value;
+      await saveSettings({ groqVoice: value });
+    }
+  },
+});
+
 init();
 
 async function init() {
@@ -39,28 +55,25 @@ async function init() {
 }
 
 async function populateVoices() {
-  els.voice.innerHTML = '';
   if (settings.provider === 'web-speech') {
     const voices = await webSpeech.waitForVoices();
-    if (voices.length === 0) {
-      addOption('', 'No voices available');
-      return;
+    const items: ComboboxItem[] = voices.map((v) => ({
+      value: v.name,
+      label: v.name,
+      hint: v.lang + (v.default ? ' · default' : ''),
+    }));
+    voiceCombo.setItems(items);
+    const initial = settings.webSpeechVoice || voices.find((v) => v.default)?.name || voices[0]?.name || '';
+    voiceCombo.setValue(initial);
+    if (initial && initial !== settings.webSpeechVoice) {
+      settings.webSpeechVoice = initial;
+      await saveSettings({ webSpeechVoice: initial });
     }
-    for (const v of voices) {
-      addOption(v.name, `${v.name} (${v.lang})${v.default ? ' — default' : ''}`);
-    }
-    els.voice.value = settings.webSpeechVoice || voices[0].name;
   } else {
-    for (const v of groq.GROQ_VOICES) addOption(v, v);
-    els.voice.value = settings.groqVoice || groq.GROQ_VOICES[0];
+    const items: ComboboxItem[] = groq.GROQ_VOICES.map((v) => ({ value: v, label: v }));
+    voiceCombo.setItems(items);
+    voiceCombo.setValue(settings.groqVoice || groq.GROQ_VOICES[0]);
   }
-}
-
-function addOption(value: string, label: string) {
-  const opt = document.createElement('option');
-  opt.value = value;
-  opt.textContent = label;
-  els.voice.appendChild(opt);
 }
 
 function attachListeners() {
@@ -68,16 +81,6 @@ function attachListeners() {
     settings.provider = els.provider.value as Provider;
     await saveSettings({ provider: settings.provider });
     await populateVoices();
-  });
-
-  els.voice.addEventListener('change', async () => {
-    if (settings.provider === 'web-speech') {
-      settings.webSpeechVoice = els.voice.value;
-      await saveSettings({ webSpeechVoice: els.voice.value });
-    } else {
-      settings.groqVoice = els.voice.value;
-      await saveSettings({ groqVoice: els.voice.value });
-    }
   });
 
   els.rate.addEventListener('input', () => {
@@ -99,13 +102,6 @@ function attachListeners() {
   els.pause.addEventListener('click', onPause);
   els.stop.addEventListener('click', onStop);
   els.openOptions.addEventListener('click', () => chrome.runtime.openOptionsPage());
-
-  chrome.runtime.onMessage.addListener((msg) => {
-    if (msg?.type === 'speak-from-context-menu' && typeof msg.text === 'string') {
-      els.text.value = msg.text;
-      onSpeak();
-    }
-  });
 }
 
 async function loadSelectionFromTab() {
@@ -137,10 +133,12 @@ async function onSpeak() {
   setUiState('playing');
   setStatus('Speaking...');
 
+  const voice = voiceCombo.getValue();
+
   if (settings.provider === 'web-speech') {
     webSpeech.speak({
       text,
-      voiceName: els.voice.value,
+      voiceName: voice,
       rate: settings.rate,
       pitch: settings.pitch,
       onEnd: () => onFinished(),
@@ -159,7 +157,7 @@ async function onSpeak() {
     const blob = await groq.synthesize({
       apiKey: settings.groqApiKey,
       text,
-      voice: els.voice.value,
+      voice,
       speed: settings.rate,
     });
     audio.play(blob, {

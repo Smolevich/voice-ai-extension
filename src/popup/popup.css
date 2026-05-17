@@ -147,3 +147,61 @@ button.secondary {
 .status.error {
   color: var(--danger);
 }
+
+.combobox {
+  position: relative;
+}
+
+.combobox input {
+  width: 100%;
+}
+
+.combobox-list {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 2px);
+  left: 0;
+  right: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.combobox-item {
+  padding: 6px 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.combobox-item.highlighted {
+  background: var(--primary);
+  color: white;
+}
+
+.combobox-item.selected:not(.highlighted) {
+  background: var(--border);
+}
+
+.combobox-hint {
+  color: var(--muted);
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.combobox-item.highlighted .combobox-hint {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.combobox-empty {
+  padding: 6px 10px;
+  color: var(--muted);
+  font-style: italic;
+}

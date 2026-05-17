@@ -17,8 +17,11 @@
       <option value="groq">Groq (free with API key)</option>
     </select>
 
-    <label for="voice">Voice</label>
-    <select id="voice"></select>
+    <label for="voice-input">Voice</label>
+    <div class="combobox">
+      <input id="voice-input" type="text" autocomplete="off" spellcheck="false" placeholder="Type to search…" />
+      <ul id="voice-list" class="combobox-list" hidden></ul>
+    </div>
 
     <label for="text">Text</label>
     <textarea id="text" rows="5" placeholder="Select text on the page and click Get selection, or paste here."></textarea>

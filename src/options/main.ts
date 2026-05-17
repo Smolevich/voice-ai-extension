@@ -6,7 +6,14 @@ const els = {
   clearGroq: document.getElementById('clear-groq') as HTMLButtonElement,
   groqStatus: document.getElementById('groq-status') as HTMLParagraphElement,
   providerRadios: document.querySelectorAll<HTMLInputElement>('input[name="provider"]'),
+  openShortcuts: document.getElementById('open-shortcuts') as HTMLButtonElement,
+  shortcutsFallback: document.getElementById('shortcuts-fallback') as HTMLParagraphElement,
+  shortcutsUrl: document.getElementById('shortcuts-url') as HTMLElement,
 };
+
+const SHORTCUTS_URL = navigator.userAgent.includes('Firefox')
+  ? 'about:addons'
+  : 'chrome://extensions/shortcuts';
 
 init();
 
@@ -30,6 +37,13 @@ async function init() {
     els.groqKey.value = '';
     await saveSettings({ groqApiKey: '' });
     setStatus(els.groqStatus, 'Key cleared.', 'success');
+  });
+
+  els.openShortcuts.addEventListener('click', () => {
+    chrome.tabs.create({ url: SHORTCUTS_URL }).catch(() => {
+      els.shortcutsUrl.textContent = SHORTCUTS_URL;
+      els.shortcutsFallback.classList.remove('hidden');
+    });
   });
 }
 

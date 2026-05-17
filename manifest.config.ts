@@ -1,6 +1,12 @@
 import { defineManifest } from '@crxjs/vite-plugin';
 import pkg from './package.json';
 
+const isFirefox = process.env.TARGET === 'firefox';
+
+const background = isFirefox
+  ? { scripts: ['src/background.ts'] }
+  : { service_worker: 'src/background.ts', type: 'module' as const };
+
 export default defineManifest({
   manifest_version: 3,
   name: 'Voice AI — TTS Extension',
@@ -26,12 +32,32 @@ export default defineManifest({
     page: 'src/options/index.html',
     open_in_tab: true,
   },
-  background: {
-    service_worker: 'src/background.ts',
-    type: 'module',
-  },
+  background,
   permissions: ['storage', 'activeTab', 'scripting', 'contextMenus'],
   host_permissions: ['https://api.groq.com/*'],
+  content_scripts: [
+    {
+      matches: ['http://*/*', 'https://*/*'],
+      js: ['src/content/selection-tracker.ts'],
+      run_at: 'document_idle',
+    },
+  ],
+  commands: {
+    'speak-selection': {
+      suggested_key: {
+        default: 'Ctrl+Shift+S',
+        mac: 'Command+Shift+S',
+      },
+      description: 'Speak the currently selected text',
+    },
+    'stop-speaking': {
+      suggested_key: {
+        default: 'Ctrl+Shift+X',
+        mac: 'Command+Shift+X',
+      },
+      description: 'Stop speaking',
+    },
+  },
   browser_specific_settings: {
     gecko: {
       id: 'voice-ai-extension@smolevich.com',

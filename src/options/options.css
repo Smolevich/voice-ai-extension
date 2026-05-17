@@ -142,3 +142,23 @@ button.danger:hover {
 a {
   color: var(--primary);
 }
+
+kbd {
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  background: var(--border);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+
+code {
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  background: var(--border);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+
+.hidden {
+  display: none;
+}

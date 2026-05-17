@@ -1,5 +1,6 @@
 node_modules/
 dist/
+dist-firefox/
 *.zip
 .DS_Store
 .env
@@ -8,3 +9,7 @@ dist/
 *.log
 .idea/
 .vscode/
+
+# Local working screenshots — not for public repo
+Screenshot*.png
+2026-*.png
