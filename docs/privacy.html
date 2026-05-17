@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacy Policy — Voice AI Extension</title>
+    <style>
+      :root {
+        --fg: #1a1a1a;
+        --muted: #6b6b6b;
+        --border: #e6e6e6;
+        --primary: #4f46e5;
+        --bg: #ffffff;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --fg: #e8e8e8;
+          --muted: #a0a0a0;
+          --border: #2f2f2f;
+          --primary: #818cf8;
+          --bg: #121212;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 48px 24px 96px;
+        color: var(--fg);
+        background: var(--bg);
+        line-height: 1.6;
+      }
+      h1 {
+        font-size: 28px;
+        margin: 0 0 8px;
+      }
+      h2 {
+        font-size: 18px;
+        margin-top: 36px;
+        margin-bottom: 8px;
+      }
+      p,
+      li {
+        font-size: 15px;
+      }
+      a {
+        color: var(--primary);
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 13px;
+        margin: 0 0 32px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 12px 0;
+      }
+      th,
+      td {
+        border: 1px solid var(--border);
+        padding: 8px 10px;
+        text-align: left;
+        font-size: 14px;
+        vertical-align: top;
+      }
+      th {
+        background: var(--border);
+      }
+      code {
+        font-family: ui-monospace, monospace;
+        font-size: 13px;
+        background: var(--border);
+        padding: 1px 6px;
+        border-radius: 4px;
+      }
+      footer {
+        margin-top: 64px;
+        padding-top: 24px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Privacy Policy — Voice AI Extension</h1>
+    <p class="meta">
+      Last updated: 17 May 2026 · Applies to: Voice AI browser extension v0.1.x
+      (Chrome / Firefox) · Source:
+      <a href="https://github.com/Smolevich/voice-ai-extension">github.com/Smolevich/voice-ai-extension</a>
+    </p>
+
+    <h2>Summary</h2>
+    <p>
+      The Voice AI extension reads selected text aloud. It runs entirely on your
+      device. The authors do not operate any server that this extension talks
+      to. There is no account, no telemetry, no analytics, no advertising.
+    </p>
+
+    <h2>What the extension stores</h2>
+    <ul>
+      <li>
+        <strong>Your preferences</strong> (voice source, selected voice, speed,
+        pitch) — kept in <code>chrome.storage.sync</code> so they follow your
+        browser profile.
+      </li>
+      <li>
+        <strong>An optional Groq API key</strong>, if you choose to use the Groq
+        voice source — also kept in <code>chrome.storage.sync</code>. The key
+        never leaves your device except when it is sent to
+        <code>api.groq.com</code> to request synthesis, exactly as it would be
+        if you used your Groq key directly.
+      </li>
+    </ul>
+    <p>
+      <code>chrome.storage.sync</code> is encrypted by the browser vendor
+      (Google for Chrome, Mozilla for Firefox) and synced across your signed-in
+      browser sessions if you have sync enabled. Neither the extension authors
+      nor any server controlled by us has access to this storage.
+    </p>
+
+    <h2>What the extension does NOT collect</h2>
+    <ul>
+      <li>No account, sign-in, or registration of any kind.</li>
+      <li>No telemetry, analytics, crash reports, or usage statistics.</li>
+      <li>No advertising or marketing data.</li>
+      <li>No reading of your browsing history.</li>
+      <li>
+        No persistent storage of selected text. The text you ask to be read
+        aloud lives in memory only while it is being read, then is discarded.
+      </li>
+      <li>No tracking across sessions, devices, or browser profiles.</li>
+    </ul>
+
+    <h2>Where data goes when you use the extension</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>What you do</th>
+          <th>What leaves your device</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Use the <strong>Browser</strong> voice source (default)</td>
+          <td>Nothing. Synthesis happens locally in your operating system.</td>
+        </tr>
+        <tr>
+          <td>Use the <strong>Groq</strong> voice source with your API key</td>
+          <td>
+            The selected text and your Groq API key are sent to
+            <code>https://api.groq.com</code>. Groq returns audio, which the
+            extension plays in the current tab and discards. We do not see,
+            proxy, or log this traffic. Groq's own terms apply:
+            <a href="https://groq.com/privacy-policy/" target="_blank" rel="noopener"
+              >groq.com/privacy-policy</a
+            >.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Third parties</h2>
+    <p>
+      The extension contacts <code>api.groq.com</code> and only when you have
+      configured the Groq voice source. No other network endpoints are
+      contacted by the extension code.
+    </p>
+
+    <h2>Permissions explained</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Permission</th>
+          <th>Why</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>storage</code></td>
+          <td>Save your settings and optional API key locally on your device.</td>
+        </tr>
+        <tr>
+          <td><code>activeTab</code></td>
+          <td>
+            Read the text you have selected on the current page, only when you
+            explicitly invoke the extension via popup, context menu, or
+            keyboard shortcut.
+          </td>
+        </tr>
+        <tr>
+          <td><code>scripting</code></td>
+          <td>
+            Inject the speech synthesis call into the current tab so audio
+            plays from the page context. Triggered only by a user gesture.
+          </td>
+        </tr>
+        <tr>
+          <td><code>contextMenus</code></td>
+          <td>Add the right-click "Speak selected text" entry.</td>
+        </tr>
+        <tr>
+          <td>content scripts on <code>http</code> and <code>https</code> pages</td>
+          <td>
+            Cache the last text selection so that the right-click menu and
+            keyboard shortcut can speak your full selection (otherwise macOS
+            Chrome collapses the selection to a single word at right-click
+            time). The content script only <em>reads</em> the selection — it
+            never modifies pages.
+          </td>
+        </tr>
+        <tr>
+          <td><code>api.groq.com</code> host permission</td>
+          <td>
+            Send selected text to Groq when you have explicitly chosen the Groq
+            voice source.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Changes to this policy</h2>
+    <p>
+      If what the extension handles changes, this page will be updated and the
+      "Last updated" date above will move. Material changes (new providers,
+      future Premium tier hitting an authors' server, any telemetry) will also
+      appear in that release's notes on GitHub.
+    </p>
+
+    <h2>Future Premium tier</h2>
+    <p>
+      A managed Premium subscription is on the roadmap. When it ships, this
+      policy will gain a section describing what data flows to the authors'
+      server. Until then, no such tier is enabled in the released extension.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      Issues and questions:
+      <a href="https://github.com/Smolevich/voice-ai-extension/issues" target="_blank" rel="noopener"
+        >github.com/Smolevich/voice-ai-extension/issues</a
+      ><br />
+      Email:
+      <a href="mailto:support@voice.smolevich.com">support@voice.smolevich.com</a>
+    </p>
+
+    <footer>
+      Operator: Stanislav Shupilkin (Belgrade, Serbia). This page is the
+      canonical privacy policy for the public Voice AI browser extension.
+    </footer>
+  </body>
+</html>

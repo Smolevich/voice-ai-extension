@@ -15,7 +15,7 @@ Ready-to-paste content for Chrome Web Store, Firefox AMO, and Edge Add-ons.
 
 Other costs that may apply outside the stores:
 - `voice.smolevich.com` domain — already paid as part of the parent project
-- Privacy policy hosting — free (a static page on the existing site)
+- Privacy policy hosting — free (GitHub Pages from this public repo)
 - Payment processor (LemonSqueezy / Paddle or similar Merchant-of-Record) — only relevant when the Premium tier ships, not for v0.1.0. MoR is preferred over Stripe to offload VAT / sales-tax compliance across jurisdictions.
 
 Bottom line for v0.1.0 submission: **$5 total**, paid once for Chrome.
@@ -26,8 +26,8 @@ Bottom line for v0.1.0 submission: **$5 total**, paid once for Chrome.
 
 - [ ] $5 Chrome Web Store developer fee paid
 - [ ] 128×128 store icon (replace placeholder via `scripts/build-icons.sh`)
-- [ ] 5 screenshots at exactly 1280×800 PNG
-- [ ] Privacy policy live at `https://voice.smolevich.com/privacy`
+- [ ] 4 screenshots at exactly 1280×800 PNG
+- [ ] Privacy policy live at `https://smolevich.github.io/voice-ai-extension/privacy.html`
 - [ ] `git tag v0.1.0 && git push --tags` → grab signed zips from GitHub Releases
 - [ ] Smoke-tested in Chrome
 - [ ] Smoke-tested in Firefox via `npm run ff:run`
@@ -139,14 +139,19 @@ Compliance certifications (all should be checked **Yes**):
 ### Privacy policy URL
 
 ```
-https://voice.smolevich.com/privacy
+https://smolevich.github.io/voice-ai-extension/privacy.html
 ```
 
-(See `docs/PRIVACY.md` for a draft of that page once we write it.)
+The source lives at `docs/privacy.html` and is served through GitHub Pages.
 
 ### Screenshots
 
-Five 1280×800 PNGs (see plan in `docs/SCREENSHOTS.md` — to be filled out). Order matters — the first is the marquee, shown on listing search results.
+Four 1280×800 PNGs live in `docs/screenshots/store/`. Order matters — the first is the marquee, shown on listing search results.
+
+1. `01-hero.png`
+2. `02-voice-search.png`
+3. `03-groq.png`
+4. `04-settings.png`
 
 ### Icon
 
