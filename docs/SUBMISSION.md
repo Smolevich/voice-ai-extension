@@ -55,7 +55,7 @@ Voice AI reads any text you select on the web — instantly, with no signup, no 
 
 • Browser voices (default). Uses your operating system's built-in text-to-speech engine. Zero setup. Works offline. No quota. 50+ voices on macOS, 30+ on Windows.
 
-• Premium AI voices via Groq (optional). Bring your free Groq API key and unlock 6 expressive Orpheus voices — Autumn, Diana, Hannah, Austin, Daniel, Troy — with optional emotion direction. Note: Orpheus accepts up to 200 characters per request, so longer selections need to be split.
+• Premium AI voices via Groq (optional). Bring your free Groq API key and unlock 6 expressive Orpheus voices — Autumn, Diana, Hannah, Austin, Daniel, Troy. Groq's free tier currently allows 200 characters per request and 100 requests per day per account — enough to try the voices and read a few short articles daily. For heavier use, Groq offers a pay-as-you-go Dev Tier at $22 per 1M characters. Current limits and pricing: https://console.groq.com/docs/rate-limits and https://console.groq.com/settings/billing.
 
 No subscription. No paywall. You keep the key.
 
@@ -89,7 +89,7 @@ Both can be remapped in chrome://extensions/shortcuts.
 
 🆓 WHAT YOU'LL PAY: NOTHING
 
-The extension is free forever. Browser voices have no quota. Groq's free tier covers everyday casual use. There is no hidden Premium tier — what you see is what you get.
+The extension is free forever. Browser voices have no quota and no provider account is needed. Groq's free tier (200 characters/request, 100 requests/day) lets you sample premium voices and read a few short articles daily; heavier use goes through Groq's $22/1M-character Dev Tier. There is no hidden Premium subscription on our side — what you see is what you get. Groq pricing: https://console.groq.com/docs/rate-limits
 
 A managed Premium subscription with curated voices is on the roadmap at voice.smolevich.com for users who'd rather not handle API keys themselves, but the core extension stays free. A local on-device voice option (private, offline) is also planned — note that it will involve a one-time model download and meaningful RAM usage, with quality and performance depending on browser and hardware.
 
@@ -180,7 +180,7 @@ TWO FREE VOICE MODES
 
 • Browser voices (default) — uses Firefox's built-in TTS engine and your operating system's voices. Zero setup. Works offline. No quota.
 
-• Premium AI voices via Groq (optional) — bring your free Groq API key and unlock 6 expressive Orpheus voices (Autumn, Diana, Hannah, Austin, Daniel, Troy). 200 characters per request.
+• Premium AI voices via Groq (optional) — bring your free Groq API key and unlock 6 expressive Orpheus voices (Autumn, Diana, Hannah, Austin, Daniel, Troy). Groq free tier: 200 characters/request, 100 requests/day. Pay-as-you-go Dev Tier available. Limits: https://console.groq.com/docs/rate-limits
 
 No subscription. No paywall. You keep the key.
 

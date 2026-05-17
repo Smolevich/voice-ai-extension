@@ -35,6 +35,8 @@ The extension is being prepared for the Chrome Web Store and Firefox Add-ons. Un
 
 Your key is stored locally in your browser via `chrome.storage.sync` and is sent only to `api.groq.com`.
 
+**Groq free-tier limits** (as of writing): 200 characters per request, 100 requests/day, 50 requests/minute on the `canopylabs/orpheus-v1-english` model. For heavier use, Groq offers a pay-as-you-go Dev Tier at $22 per 1M characters. Current limits: https://console.groq.com/docs/rate-limits
+
 ## Development
 
 ```bash
