@@ -66,7 +66,7 @@ icons/               # extension icons
 ## Roadmap
 
 - [ ] Premium tier via voice.smolevich.com (no setup, subscription)
-- [ ] Local Kokoro-82M model (opt-in, offline, ~400 MB RAM)
+- [ ] Local Kokoro-82M model (opt-in, offline, private). Caveats: ships as a ~80 MB on-demand download, uses ~300–500 MB of RAM during synthesis, and requires WebGPU or a modern CPU for usable speed. Implementation differs between Chrome (offscreen document + `wasm-unsafe-eval`) and Firefox (no offscreen API — runs in the event page), so support and quality may vary by browser.
 - [ ] Read full page (article extraction)
 - [ ] Highlight text as it's read
 - [ ] PDF and Google Docs support

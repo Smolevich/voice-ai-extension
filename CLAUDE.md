@@ -12,10 +12,22 @@ Goal: install → works in 2 seconds (Web Speech) → upgrade to free Groq voice
 |---|---|---|
 | 1 | Web Speech API (browser-native) | shipped in v0.1.0 |
 | 2 | Groq BYOK (PlayAI TTS via OpenAI-compatible endpoint) | shipped in v0.1.0 |
-| 3 | Local Kokoro-82M via `kokoro-js` (opt-in, ~400MB RAM) | roadmap |
+| 3 | Local Kokoro-82M via `kokoro-js` (opt-in) | roadmap — see caveats below |
 | 4 | Premium via `voice.smolevich.com` (JWT auth, server-side keys) | roadmap |
 
 Decision rationale: see conversation that produced v0.1.0. Key constraints — code in the public repo must contain no secrets, BYOK keys live only in `chrome.storage.sync` on user device, premium tier (when built) proxies through `voice.smolevich.com` so provider keys stay server-side.
+
+### Local Kokoro caveats (do not promise a date)
+
+Local synthesis is a v0.3+ feature, not MVP. Before promising it in marketing copy, be aware:
+
+- **Resource footprint**: ~80 MB one-time model download, 300–500 MB RAM during synthesis. Bottom-tier laptops and low-RAM Chromebooks will struggle.
+- **Speed depends on WebGPU**: real-time with WebGPU (Chrome 113+ stable, Firefox still flag-gated as of 2026). Without WebGPU, WASM CPU inference is 5–15 s per sentence — usable but noticeably slow.
+- **Cross-browser**: Chrome uses `chrome.offscreen` API (since Chrome 109) for the WASM/WebGPU runtime. Firefox MV3 has no offscreen API — the model has to run in the event page background, which has different lifecycle rules. Implementation paths diverge.
+- **Permissions cost**: requires CSP relaxation (`wasm-unsafe-eval`), `offscreen` permission on Chrome, and either bundling the model or `host_permissions` for the model CDN. Each one adds reviewer scrutiny on Web Store / AMO resubmissions.
+- **Quality vs. competition**: Kokoro-82M is better than eSpeak (Linux Firefox default) but comparable to macOS Siri voices, not categorically better. Marketing this as "premium offline" misleads users on Mac.
+
+Frame Kokoro to users as: "private, runs entirely on your machine, works offline — comes with a one-time download and meaningful RAM usage; quality and compatibility depend on your browser and hardware."
 
 ## Tech Stack
 
