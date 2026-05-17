@@ -12,7 +12,7 @@ export interface Settings {
 export const DEFAULTS: Settings = {
   provider: 'web-speech',
   groqApiKey: '',
-  groqVoice: 'Fritz-PlayAI',
+  groqVoice: 'diana',
   webSpeechVoice: '',
   rate: 1,
   pitch: 1,

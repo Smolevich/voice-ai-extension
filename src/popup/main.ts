@@ -158,7 +158,6 @@ async function onSpeak() {
       apiKey: settings.groqApiKey,
       text,
       voice,
-      speed: settings.rate,
     });
     audio.play(blob, {
       onEnded: () => onFinished(),

@@ -55,7 +55,7 @@ Voice AI reads any text you select on the web — instantly, with no signup, no 
 
 • Browser voices (default). Uses your operating system's built-in text-to-speech engine. Zero setup. Works offline. No quota. 50+ voices on macOS, 30+ on Windows.
 
-• Premium AI voices via Groq (optional). Bring your free Groq API key and unlock 19 natural PlayAI voices — Briggs, Atlas, Fritz, Indigo, Quinn, Thunder, and more.
+• Premium AI voices via Groq (optional). Bring your free Groq API key and unlock 6 expressive Orpheus voices — Autumn, Diana, Hannah, Austin, Daniel, Troy — with optional emotion direction. Note: Orpheus accepts up to 200 characters per request, so longer selections need to be split.
 
 No subscription. No paywall. You keep the key.
 
@@ -180,7 +180,7 @@ TWO FREE VOICE MODES
 
 • Browser voices (default) — uses Firefox's built-in TTS engine and your operating system's voices. Zero setup. Works offline. No quota.
 
-• Premium AI voices via Groq (optional) — bring your free Groq API key and unlock 19 natural PlayAI voices.
+• Premium AI voices via Groq (optional) — bring your free Groq API key and unlock 6 expressive Orpheus voices (Autumn, Diana, Hannah, Austin, Daniel, Troy). 200 characters per request.
 
 No subscription. No paywall. You keep the key.
 

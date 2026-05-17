@@ -1,4 +1,5 @@
 import { DEFAULTS, loadSettings } from './lib/storage';
+import { synthesize as groqSynthesize } from './lib/groq';
 
 const CONTEXT_MENU_ID = 'voice-ai-speak-selection';
 
@@ -117,27 +118,12 @@ async function speakWithGroqInTab(
   text: string,
   settings: typeof DEFAULTS,
 ): Promise<void> {
-  const resp = await fetch('https://api.groq.com/openai/v1/audio/speech', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${settings.groqApiKey}`,
-    },
-    body: JSON.stringify({
-      model: 'playai-tts',
-      voice: settings.groqVoice,
-      input: text,
-      response_format: 'wav',
-      ...(settings.rate !== 1 ? { speed: settings.rate } : {}),
-    }),
+  const blob = await groqSynthesize({
+    apiKey: settings.groqApiKey,
+    text,
+    voice: settings.groqVoice,
   });
-
-  if (!resp.ok) {
-    const detail = await resp.text().catch(() => '');
-    throw new Error(`Groq TTS failed (${resp.status}): ${detail || resp.statusText}`);
-  }
-
-  const buffer = await resp.arrayBuffer();
+  const buffer = await blob.arrayBuffer();
   const base64 = arrayBufferToBase64(buffer);
 
   await chrome.scripting.executeScript({
