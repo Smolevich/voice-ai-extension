@@ -4,6 +4,8 @@ A free, open-source text-to-speech extension for Chrome and Firefox. Reads selec
 
 No account, no subscription, no tracking. The code shipped to the store is the code in this repo.
 
+![Voice AI popup reading selected text](./docs/screenshots/chrome-store/01-hero.png)
+
 ## Features
 
 - **Browser voices (default)** — works the moment you install the extension. Free, offline, uses your OS voices.

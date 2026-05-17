@@ -1,10 +1,12 @@
-// Generate 1280x800 PNG screenshots for Chrome Web Store / Firefox AMO listings.
+// Generate 1280x800 PNG screenshots for Chrome Web Store and Firefox AMO listings.
 //
 // Usage:
 //   npx playwright install chromium   # one-time
 //   npm run screenshots
 //
-// Output: docs/screenshots/store/{01..04}-*.png
+// Output:
+//   docs/screenshots/chrome-store/{01..04}-*.png
+//   docs/screenshots/amo/{01..04}-*.png
 
 import { chromium } from 'playwright';
 import sharp from 'sharp';
@@ -15,7 +17,10 @@ import fs from 'node:fs/promises';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
 const distPath = path.join(root, 'dist');
-const outDir = path.join(root, 'docs/screenshots/store');
+const outputDirs = [
+  path.join(root, 'docs/screenshots/chrome-store'),
+  path.join(root, 'docs/screenshots/amo'),
+];
 
 const FRAME_W = 1280;
 const FRAME_H = 800;
@@ -27,20 +32,50 @@ async function main() {
   await fs.access(path.join(distPath, 'manifest.json')).catch(() => {
     throw new Error('dist/ missing — run `npm run build` first.');
   });
-  await fs.mkdir(outDir, { recursive: true });
+  await Promise.all(outputDirs.map((outDir) => fs.mkdir(outDir, { recursive: true })));
 
   const context = await chromium.launchPersistentContext('', {
-    headless: false,
+    channel: 'chromium',
+    headless: true,
     viewport: { width: FRAME_W, height: FRAME_H },
     args: [
       `--disable-extensions-except=${distPath}`,
       `--load-extension=${distPath}`,
       `--window-size=${FRAME_W},${FRAME_H + 120}`,
+      '--no-first-run',
+      '--no-default-browser-check',
+      '--no-welcome',
+      '--disable-sync',
+      '--disable-signin-promo',
+      '--password-store=basic',
+      '--use-mock-keychain',
     ],
   });
 
-  let [sw] = context.serviceWorkers();
-  if (!sw) sw = await context.waitForEvent('serviceworker', { timeout: 10000 });
+  let sw;
+  // Poll for the active service worker first, as it might register immediately
+  for (let i = 0; i < 20; i++) {
+    const workers = context.serviceWorkers();
+    if (workers.length > 0) {
+      sw = workers[0];
+      break;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 200));
+  }
+
+  if (!sw) {
+    try {
+      sw = await context.waitForEvent('serviceworker', { timeout: 4000 });
+    } catch (err) {
+      const workers = context.serviceWorkers();
+      if (workers.length > 0) {
+        sw = workers[0];
+      } else {
+        throw new Error('Could not find extension service worker. Make sure the extension builds correctly.');
+      }
+    }
+  }
+
   const extensionId = sw.url().split('/')[2];
   console.log('extension id:', extensionId);
 
@@ -90,15 +125,15 @@ async function main() {
   await options.setViewportSize({ width: FRAME_W, height: FRAME_H });
   await options.goto(optionsUrl, { waitUntil: 'networkidle' });
   await options.waitForTimeout(300);
-  await options.screenshot({
-    path: path.join(outDir, '04-settings.png'),
+  const optionsBuf = await options.screenshot({
     clip: { x: 0, y: 0, width: FRAME_W, height: FRAME_H },
   });
-  console.log('wrote 04-settings.png');
+  await writeOutputs('04-settings.png', optionsBuf);
   await options.close();
 
   await context.close();
-  console.log('all screenshots in', outDir);
+  console.log('all screenshots in:');
+  for (const outDir of outputDirs) console.log(' ', outDir);
 }
 
 async function snapWikiBackdrop(context) {
@@ -150,8 +185,12 @@ async function compose(bgBuf, fgBuf, name) {
     .composite([{ input: fgBuf, top, left, blend: 'over' }])
     .png()
     .toBuffer();
-  await fs.writeFile(path.join(outDir, name), out);
-  console.log('wrote', name);
+  await writeOutputs(name, out);
+}
+
+async function writeOutputs(name, buf) {
+  await Promise.all(outputDirs.map((outDir) => fs.writeFile(path.join(outDir, name), buf)));
+  console.log('wrote', outputDirs.map((outDir) => path.relative(root, path.join(outDir, name))).join(' and '));
 }
 
 main().catch((err) => {

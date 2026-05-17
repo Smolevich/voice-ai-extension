@@ -45,7 +45,7 @@ Use the second URL in both Chrome Web Store and Firefox AMO privacy fields. The 
 
 ## 3. Screenshots
 
-Current store screenshots are already committed under `docs/screenshots/store/`:
+Current Chrome Web Store screenshots are already committed under `docs/screenshots/chrome-store/`:
 
 ```text
 01-hero.png
@@ -54,14 +54,16 @@ Current store screenshots are already committed under `docs/screenshots/store/`:
 04-settings.png
 ```
 
-Regenerate them only if the UI changes:
+Regenerate both screenshot sets only if the UI changes:
 
 ```bash
 npx playwright install chromium
 npm run screenshots
 ```
 
-The script creates 1280x800 PNGs for both Chrome Web Store and Firefox AMO.
+The script writes Chrome Web Store screenshots to `docs/screenshots/chrome-store/`
+and Firefox AMO screenshots to `docs/screenshots/amo/`. Both sets are 1280x800
+PNG. The AMO set is browser-neutral and avoids Chrome-specific UI.
 
 ## 4. Cut the release
 
@@ -97,7 +99,7 @@ https://chrome.google.com/webstore/devconsole
 2. Open the Developer Dashboard and click `New item`.
 3. Upload `voice-ai-extension-chrome-v0.1.0.zip`.
 4. Copy listing text, single purpose, permission justifications, data disclosure answers, and privacy URL from `docs/SUBMISSION.md`.
-5. Upload the four screenshots from `docs/screenshots/store/`.
+5. Upload the four Chrome screenshots from `docs/screenshots/chrome-store/`.
 6. Submit for review.
 
 Approval notes:
@@ -119,7 +121,7 @@ https://addons.mozilla.org/developers/addon/submit/distribution
 2. Upload `voice-ai-extension-firefox-v0.1.0.zip`.
 3. Pick MIT license and Accessibility/Productivity category.
 4. Copy AMO listing text from `docs/SUBMISSION.md`.
-5. Use the same privacy URL and screenshots.
+5. Use the same privacy URL and upload Firefox screenshots from `docs/screenshots/amo/`.
 6. If AMO asks for source, provide the public GitHub tag plus this build command:
 
 ```bash
