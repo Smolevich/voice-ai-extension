@@ -16,17 +16,8 @@ No account, no subscription, no tracking. The code shipped to the store is the c
 
 ## Install
 
-The extension is being prepared for the Chrome Web Store and Firefox Add-ons. Until then, load it as an unpacked extension:
-
-### Chrome / Edge / Brave
-1. `npm install && npm run build`
-2. Open `chrome://extensions`, enable **Developer mode**.
-3. Click **Load unpacked** and select the `dist/` folder.
-
-### Firefox (Manifest V3 — Firefox 121+)
-1. `npm install && npm run build:firefox`
-2. Open `about:debugging#/runtime/this-firefox`.
-3. Click **Load Temporary Add-on** and select `dist/manifest.json`.
+- **Chrome / Edge / Brave** — [Chrome Web Store](https://chromewebstore.google.com/detail/voice-ai-%E2%80%94-tts-extension/hehpkapkahnkcnhdefickibgnoglgfkb)
+- **Firefox** — [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/voice-ai-tts-extension/)
 
 ## Use your own Groq API key (optional)
 
@@ -78,7 +69,19 @@ icons/               # extension icons
 
 ## Contributing
 
-Issues and pull requests welcome. Run `npm run typecheck` before submitting.
+Issues and pull requests welcome. If you'd rather build the extension from source than install from the store — for development, review, or to run an unsigned version — load it as an unpacked extension:
+
+### Chrome / Edge / Brave
+1. `npm install && npm run build`
+2. Open `chrome://extensions`, enable **Developer mode**.
+3. Click **Load unpacked** and select the `dist/` folder.
+
+### Firefox (Manifest V3 — Firefox 121+)
+1. `npm install && npm run build:firefox`
+2. Open `about:debugging#/runtime/this-firefox`.
+3. Click **Load Temporary Add-on** and select `dist/manifest.json`.
+
+Run `npm run typecheck` before submitting a pull request.
 
 ## License
 
